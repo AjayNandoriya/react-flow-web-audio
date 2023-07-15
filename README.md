@@ -1,4 +1,4 @@
-# React Flow Web Audio Playground
+# React Flow Web Audio Playground [https://ajaynandoriya.github.io/react-flow-web-audio/]
 
 This repo contains a small Web Audio playground built with React Flow. Go check
 out the [blog post](https://reactflow.dev/blog/react-flow-and-the-web-audio-api/)
