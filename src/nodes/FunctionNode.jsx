@@ -12,12 +12,12 @@ const selector = (id) => (store) => ({
 ;
 
 const DynInputHandle = (props) => {
-  const { idx } = props;
+  const { idx, nodeID } = props;
 
   return (
     <Handle
       type={"target"}
-      id={`input${idx}`}
+      id={`${nodeID}_input${idx}`}
       position={Position.Left}
       style={{ top: 10 + idx * 20 }}
     />
@@ -25,12 +25,12 @@ const DynInputHandle = (props) => {
 };
 
 const DynOutputHandle = (props) => {
-  const { idx } = props;
+  const { idx, nodeID } = props;
 
   return (
     <Handle
       type={"source"}
-      id={`output${idx}`}
+      id={`${nodeID}_output${idx}`}
       position={Position.Right}
       style={{ top: 10 + idx * 20 }}
     />
@@ -102,17 +102,15 @@ export default function FunctionNode({ id, data }) {
       </label>
       <hr className={tw("border-gray-200 mx-2")} />
 
-      <Handle className={tw("w-2 h-2")} type="target" position="top" />
-
       {Array(data.inputs.length)
         .fill(null)
         .map((_, i) => (
-          <DynInputHandle key={i} idx={i} />
+          <DynInputHandle key={i} idx={i} nodeID={id}/>
         ))}
       {Array(data.outputs.length)
         .fill(null)
         .map((_, i) => (
-          <DynOutputHandle key={i} idx={i} />
+          <DynOutputHandle key={i} idx={i} nodeID={id}/>
         ))}
     </div>
   );
