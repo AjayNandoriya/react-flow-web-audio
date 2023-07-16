@@ -1,6 +1,7 @@
 const context = new AudioContext();
 const nodes = new Map();
 
+
 const osc = context.createOscillator();
 osc.frequency.value = 220;
 osc.type = "square";
@@ -43,6 +44,10 @@ export function createAudioNode(id, type, data) {
       nodes.set(id, node);
       break;
     }
+
+    case "imgUpload":{
+      break;
+    }
   }
 }
 
@@ -70,7 +75,9 @@ export function removeAudioNode(id) {
 export function connect(sourceId, targetId) {
   const source = nodes.get(sourceId);
   const target = nodes.get(targetId);
-
+  if (source === undefined || target === undefined){
+    return;
+  }
   source.connect(target);
 }
 
@@ -78,5 +85,8 @@ export function disconnect(sourceId, targetId) {
   const source = nodes.get(sourceId);
   const target = nodes.get(targetId);
 
+  if (source === undefined || target === undefined){
+    return;
+  }
   source.disconnect(target);
 }

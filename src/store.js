@@ -26,6 +26,12 @@ export const useStore = create((set, get) => ({
       position: { x: -100, y: 100 },
     },
     { id: "output", type: "out", position: { x: 50, y: 250 } },
+    {
+      id: "imgUpload",
+      type: "imgUpload",
+      data: { img: null },
+      position: { x: -200, y: 100 },
+    },
   ],
   edges: [
     { id: "osc->amp", source: "osc", target: "amp" },
@@ -64,6 +70,24 @@ export const useStore = create((set, get) => ({
         const position = { x: 0, y: 0 };
 
         createAudioNode(id, type, data);
+        set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+        break;
+      }
+
+      case "imgUpload": {
+        const data = { img: null };
+        const position = { x: 0, y: 0 };
+
+        set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+        break;
+      }
+
+      case "imgDisplay": {
+        const data = { img: null };
+        const position = { x: 0, y: 0 };
+
         set({ nodes: [...get().nodes, { id, type, data, position }] });
 
         break;
