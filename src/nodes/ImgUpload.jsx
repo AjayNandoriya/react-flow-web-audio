@@ -32,8 +32,8 @@ export default function ImgUpload({ id, data }) {
 
       <hr className={tw("border-gray-200 mx-2")} />
 
-      <Handle className={tw("w-2 h-2")} type="source" position="bottom" id="0"/>
-      <Handle className={tw("w-2 h-2")} type="source" position="bottom"  id="1" style={{ left: 10 }}/>
+      <Handle className={tw("w-2 h-2")} type="source" position="bottom" id={`${id}_out_0`}/>
+      <Handle className={tw("w-2 h-2")} type="source" position="bottom"  id={`${id}_out_1`} style={{ left: 10 }}/>
     </div>
   );
 }

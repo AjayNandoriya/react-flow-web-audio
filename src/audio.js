@@ -54,6 +54,9 @@ export function createAudioNode(id, type, data) {
 export function updateAudioNode(id, data) {
   const node = nodes.get(id);
 
+    if(node == undefined){
+      return;
+    }
   for (const [key, val] of Object.entries(data)) {
     if (node[key] instanceof AudioParam) {
       node[key].value = val;

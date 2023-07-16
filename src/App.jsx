@@ -15,13 +15,15 @@ import Out from "./nodes/Out";
 import "reactflow/dist/style.css";
 import ImgUpload from "./nodes/ImgUpload";
 import ImgDisplay from "./nodes/ImgDisplay";
+import FunctionNode from "./nodes/FunctionNode";
 
 const nodeTypes = {
   osc: Osc,
   amp: Amp,
   out: Out,
   imgUpload: ImgUpload,
-  imgDisplay: ImgDisplay
+  imgDisplay: ImgDisplay,
+  functionNode: FunctionNode
 };
 
 const selector = (store) => ({
@@ -36,6 +38,7 @@ const selector = (store) => ({
   addAmp: () => store.createNode("amp"),
   addImgUpload: () => store.createNode("imgUpload"),
   addImgDisplay: () => store.createNode("imgDisplay"),
+  addFunctionNode: () => store.createNode("functionNode"),
 });
 
 export default function App() {
@@ -76,6 +79,12 @@ export default function App() {
           onClick={store.addImgDisplay}
         >
           Add ImgDisplay
+        </button>
+        <button
+          className={tw("px-2 py-1 rounded bg-white shadow")}
+          onClick={store.addFunctionNode}
+        >
+          Add FunctionNode
         </button>
       </Panel>
       <Background />

@@ -92,6 +92,14 @@ export const useStore = create((set, get) => ({
 
         break;
       }
+      case "functionNode": {
+        const data = { inputs: Array(0), outputs:Array(0) };
+        const position = { x: 0, y: 0 };
+
+        set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+        break;
+      }
     }
   },
 
