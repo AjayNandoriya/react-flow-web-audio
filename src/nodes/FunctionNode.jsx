@@ -1,5 +1,5 @@
 import React from "react";
-import { Handle, Position } from "reactflow";
+import { Handle, Position , useUpdateNodeInternals } from "reactflow";
 import { shallow } from "zustand/shallow";
 import { tw } from "twind";
 import { useStore } from "../store";
@@ -7,7 +7,8 @@ import { useStore } from "../store";
 const selector = (id) => (store) => ({
   getInputs: () => store.get().nodes.filter((node) => node.id==id)[0].inputs,
   setOutputs: (outputs) => store.updateNode(id, {outputs: outputs}),
-  setInputs: (inputs) => store.updateNode(id, {inputs: inputs})
+  setInputs: (inputs) => store.updateNode(id, {inputs: inputs}),
+  setLabel: (label) => store.updateNode(id, {label: label})
 })  
 ;
 
@@ -37,7 +38,8 @@ const DynOutputHandle = (props) => {
   );
 };
 export default function FunctionNode({ id, data }) {
-  const { setOutputs, setInputs, getInputs } = useStore(selector(id), shallow);
+  const updateNodeInternals = useUpdateNodeInternals();
+  const { setOutputs, setInputs, getInputs, setLabel } = useStore(selector(id), shallow);
 
   const createInputs = (e)=>{
     const inputCount = e.target.value;
@@ -47,12 +49,13 @@ export default function FunctionNode({ id, data }) {
     else if (data.inputs.length > inputCount){
       const inputs = data.inputs.slice(0,inputCount);
       setInputs(inputs);
+      
     }
     else{
       const inputs = [...data.inputs, Array(inputCount-data.inputs.length).fill(null)];
       setInputs(inputs);
     }
-    
+    updateNodeInternals(id);
   }
   const createOutputs = (e)=>{
     const outputCount = e.target.value;
@@ -67,15 +70,24 @@ export default function FunctionNode({ id, data }) {
       const outputs = [...data.outputs, Array(outputCount-data.outputs.length).fill(null)];
       setOutputs(outputs);
     }
-    
+    updateNodeInternals(id);
   }
+
+  
+  
   return (
     <div className={tw("rounded-md bg-white shadow-xl")}>
-      <p
-        className={tw("rounded-t-md px-2 py-1 bg-pink-500 text-white text-sm")}
-      >
-        FunctionNode
-      </p>
+      <label className={tw("flex flex-col px-2 py-1")}>
+        
+        <input
+          // className="nodrag"
+          className={tw("rounded-t-md px-2 py-1 bg-pink-500 text-white text-sm")}
+          type="text"
+          defaultValue = {data.label}
+          onChange={(e)=>{setLabel(e.target.value)}}
+        />
+      </label>
+      
 
       <label className={tw("flex flex-col px-2 py-1")}>
         <p className={tw("text-xs font-bold mb-2")}>Inputs : {data.inputs.length}</p>

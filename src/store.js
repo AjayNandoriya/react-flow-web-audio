@@ -93,7 +93,7 @@ export const useStore = create((set, get) => ({
         break;
       }
       case "functionNode": {
-        const data = { inputs: Array(0), outputs:Array(0) };
+        const data = { label:"fnode",inputs: Array(0), outputs:Array(0) };
         const position = { x: 0, y: 0 };
 
         set({ nodes: [...get().nodes, { id, type, data, position }] });
@@ -102,7 +102,16 @@ export const useStore = create((set, get) => ({
       }
     }
   },
+  createFunctionNode(functionName, inputCount, outputCount, x, y){
+    const id = nanoid();
+    const type = "functionNode";
+    const data = { label:functionName, inputs: Array(inputCount).fill(null), outputs:Array(outputCount).fill(null) };
+    const position = { x: 0, y: 0 };
 
+    set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+    
+  },
   updateNode(id, data) {
     updateAudioNode(id, data);
     set({
